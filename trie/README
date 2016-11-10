@@ -1,1 +1,3 @@
 A trie is a nice structure for doing string and prefix look-ups. Computationally, building the trie is O(n) per word, and searching it is also an upper-bound O(n). I think the real wins are in space complexity, but the calculation of that is going to depend on how many common words you have in a data set.
+
+This thing works with all strings, but nothing other than strings.
