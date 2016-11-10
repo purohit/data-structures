@@ -16,6 +16,7 @@ func newNode() *node {
 	}
 }
 
+// add indexes a string.
 func (t *trie) add(s string) {
 	curNode := t.start
 	for _, c := range s {
@@ -24,13 +25,12 @@ func (t *trie) add(s string) {
 		}
 		curNode = curNode.leaves[c]
 	}
-	// Add end marker so we know it's a word.
-	// Let's pick something special, as long as there aren't
-	// conflicts with the dictionary, we don't have to worry.
-	curNode.wordFinal = true
+	curNode.wordFinal = true // Add end marker so we know it's a word.
 	t.size++
 }
 
+// search returns if s was found, as well as how many operations
+// it took to find or fail fast.
 func (t *trie) search(s string) (found bool, lookups int) {
 	curNode := t.start
 	for _, c := range s {
@@ -41,8 +41,7 @@ func (t *trie) search(s string) (found bool, lookups int) {
 		curNode = curNode.leaves[c]
 	}
 	lookups++
-	// At the end, make sure there's an end-marker.
-	found = curNode.wordFinal
+	found = curNode.wordFinal // At the end, make sure there's an end-marker.
 	return
 }
 
