@@ -19,7 +19,7 @@ import (
 // n = 1,000,000, p = 0.1 (1 in 10) → m = 4,792,530 (585.03KB), k = 3
 
 const (
-	m = 64
+	m = 64 // (TODO: Support m != 64).
 	k = 4
 )
 
@@ -32,16 +32,16 @@ type bloomFilter struct {
 }
 
 func newHashFn(n int) hashFn {
-	// The hash function just concats
-	// the value of n to the input to produce
-	// a "new" hash function
 	return func(input string) uint64 {
+		// The hash function just concats
+		// the value of n to the input to produce
+		// a "new" hash function
 		in := fmt.Sprintf("%s%d", input, n)
-		// There's gotta be a better way to do this...
+		// Create the hash
 		h := fnv.New64()
 		h.Write([]byte(in))
 		v := h.Sum64()
-		// This hash function will set some specific bit, depending on the size.
+		// Set some specific bit, depending on the size of m.
 		return 1 << (v % m)
 	}
 }
